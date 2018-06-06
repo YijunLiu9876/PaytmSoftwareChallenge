@@ -1,0 +1,43 @@
+authserver:
+  hostname: localhost
+server:
+  port: 8080
+
+spring:
+  application:
+    name: paytm-core-service
+  datasource:
+    url: jdbc:mysql://localhost/auth
+    username: root
+    password:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+    hibernate:
+      ddl-auto: create
+
+twitter:
+  consumerKey: VRwI4f8TZrVBg6CcM5FiR5MDa
+  consumerSecret: JGKU8mGSuvAjs0eTGoK9q5t5Cq0zQrMxJdYyyK90cwgcEitbtj
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        keyUri: http://${authserver.hostname}:${server.port}/oauth/token_key
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    com:
+      datastax:
+        driver:
+          core:
+            QueryLogger:
+              NORMAL: DEBUG
+              SLOW: TRACE

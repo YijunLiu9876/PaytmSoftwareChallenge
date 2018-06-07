@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,21 +20,31 @@ public class TweetsController {
 
     @GetMapping("/search/{query-str}")
     public ResponseEntity<List<String>> searchTweets(@PathVariable("query-str") String queryStr) {
-        List<String> tweets = tweetsService.searchTweets(queryStr);
-        if (tweets.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(tweets);
+        List<String> tweets = null;
+        try {
+            tweets = tweetsService.searchTweets(queryStr);
+            if (tweets.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok().body(tweets);
+            }
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
         }
+
     }
 
     @GetMapping("/lucky/{query-str}")
     public ResponseEntity<List<String>> searchTweetsNeverViewed(@PathVariable("query-str") String queryStr) {
-        List<String> tweets = tweetsService.searchTweetsNeverViewed(queryStr);
-        if (tweets.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok().body(tweets);
+        try {
+            List<String> tweets = tweetsService.searchTweetsNeverViewed(queryStr);
+            if (tweets.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.ok().body(tweets);
+            }
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

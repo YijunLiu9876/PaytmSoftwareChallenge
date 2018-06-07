@@ -22,6 +22,8 @@ spring:
 twitter:
   consumerKey: VRwI4f8TZrVBg6CcM5FiR5MDa
   consumerSecret: JGKU8mGSuvAjs0eTGoK9q5t5Cq0zQrMxJdYyyK90cwgcEitbtj
+  accessTokenUri: https://api.twitter.com/oauth2/token
+  tweetsSearchUrl: https://api.twitter.com/1.1/search/tweets.json
 
 security:
   oauth2:

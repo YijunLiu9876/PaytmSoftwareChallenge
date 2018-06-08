@@ -25,7 +25,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("username exist");
         }
         userModelService.createUser(new UserModel(username, password));
-        return ResponseEntity.accepted().body("user created");
+        return ResponseEntity.status(HttpStatus.CREATED).body("user created");
     }
 
     @PostMapping("/changePassword")
@@ -35,6 +35,6 @@ public class UserController {
         } catch (AuthenticationException ae) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ae.getMessage());
         }
-        return ResponseEntity.ok().body("password changed, client needs to logout and clear current access_token");
+        return ResponseEntity.accepted().body("password changed, client needs to logout and clear current access_token");
     }
 }

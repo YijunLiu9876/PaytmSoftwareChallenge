@@ -1,6 +1,5 @@
 package com.paytm.core.config;
 
-import org.joda.time.DateTime;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -16,7 +15,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
             OAuth2AccessToken accessToken,
             OAuth2Authentication authentication) {
         Map<String, Object> additionalInfo = new HashMap<>();
-        additionalInfo.put("creation_timestamp", new Timestamp(DateTime.now().getMillis()));
+        additionalInfo.put("creation_timestamp", new Timestamp(System.currentTimeMillis()));
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }

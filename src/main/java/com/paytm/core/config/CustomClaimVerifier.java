@@ -21,13 +21,14 @@ public class CustomClaimVerifier implements JwtClaimsSetVerifier {
     public void verify(Map<String, Object> claims) throws InvalidTokenException {
         Timestamp creationTimestamp = new Timestamp((Long) claims.get("creation_timestamp"));
         String username = (String) claims.get("user_name");
-        log.info("creationTimestamp from claims: " + creationTimestamp);
+        log.info("creationTimestamp: " + creationTimestamp);
         if ((creationTimestamp == null || username == null || username.length() == 0)) {
             throw new InvalidTokenException("missing claims");
         }
         try {
             UserModel userModel = userModelService.findUserByUsername(username);
-            if ((creationTimestamp.before(userModel.getLastModifiedDate())))
+            log.info("lastModifiedDate: " + userModel.getLastModifiedDate());
+            if ((creationTimestamp.getTime() < userModel.getLastModifiedDate().getTime() - 1000))
                 throw new InvalidTokenException("token invalid");
         } catch (UsernameNotFoundException unfe) {
             throw new InvalidTokenException(unfe.getMessage());

@@ -6,10 +6,10 @@ server:
 spring:
   application:
     name: paytm-core-service
-  datasource:
-    url: jdbc:mysql://localhost/auth
-    username: root
-    password:
+#  datasource:
+#    url: jdbc:mysql://localhost/auth
+#    username: root
+#    password:
   jpa:
     properties:
       hibernate:
